@@ -1,0 +1,98 @@
+import cv2
+import dlib
+import numpy as np
+
+def detect_number_plate(image_path):
+    # Load the image
+    img = cv2.imread(image_path)
+    
+    # Use a pre-trained deep learning model for license plate detection
+    net = cv2.dnn.readNet('yolov3.weights', 'yolov3.cfg')
+    layer_names = net.getUnconnectedOutLayersNames()
+    
+    # Resize the image and normalize pixel values
+    blob = cv2.dnn.blobFromImage(img, 0.00392, (416, 416), (0, 0, 0), True, crop=False)
+    
+    # Pass the image through the network and get detections
+    net.setInput(blob)
+    outs = net.forward(layer_names)
+    
+    # Get confidence scores and class IDs
+    confidences = []
+    class_ids = []
+    
+    for out in outs:
+        for detection in out:
+            scores = detection[5:]
+            class_id = np.argmax(scores)
+            confidence = scores[class_id]
+            
+            if confidence > 0.5 and class_id == 10:  # Assuming class 10 corresponds to license plates
+                # Scale bounding box coordinates to the original image size
+                box = detection[0:4] * np.array([img.shape[1], img.shape[0], img.shape[1], img.shape[0]])
+                (x, y, w, h) = box.astype(int)
+                
+                # Extract the region of interest (ROI) containing the license plate
+                plate_roi = img[y:y + h, x:x + w]
+                
+                cv2.imshow('Number Plate', plate_roi)
+                cv2.waitKey(0)
+                cv2.destroyAllWindows()
+                
+                # Call a function to identify and verify the number plate against the database
+                identify_number_plate(plate_roi)
+
+def identify_number_plate(plate_image):
+    # Placeholder function to identify and verify the number plate against the database
+    # Implement your advanced logic here, potentially using OCR or a custom deep learning model
+    
+    # For demonstration purposes, let's assume the number plate details
+    car_name = "BMW"
+    reg_number = "B357AWS"
+    owner_name = "Topo Rapula"
+    
+    print(f"Car: {car_name}\nRegistration Number: {reg_number}\nOwner: {owner_name}")
+
+def detect_face(image_path):
+    # Load the image
+    img = cv2.imread(image_path)
+    
+    # Load the dlib face recognition model
+    face_detector = dlib.get_frontal_face_detector()
+    landmark_predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
+    
+    # Convert the image to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    # Detect faces
+    faces = face_detector(gray)
+    
+    for face in faces:
+        # Get facial landmarks
+        landmarks = landmark_predictor(gray, face)
+        
+        # Draw bounding box and facial landmarks
+        for n in range(68):
+            x, y = landmarks.part(n).x, landmarks.part(n).y
+            cv2.circle(img, (x, y), 2, (0, 255, 0), -1)
+        
+        cv2.imshow('Face Recognition', img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        
+        # Call a function to identify and verify the face against the database
+        identify_face()
+
+def identify_face():
+    # Placeholder function to identify and verify the face against the database
+    # Implement your advanced logic here, potentially using deep learning models
+    
+    # For demonstration purposes, let's assume the face belongs to the owner of the car
+    owner_name = "Topo Raps"
+    
+    print(f"Face identified as: {owner_name}")
+
+# usage
+image_path = 'pictures/image12.jpg'
+detect_number_plate(image_path)
+detect_face(image_path)
