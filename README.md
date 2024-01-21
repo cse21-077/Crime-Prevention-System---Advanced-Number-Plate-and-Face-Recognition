@@ -47,6 +47,20 @@ Once the system achieves a high level of security and accuracy, we envision coll
 
 - **Database Access:** Access to official databases can significantly augment the system's capabilities. By integrating with governmental resources, we can enhance the accuracy and reliability of identification, contributing to a safer environment for citizens.
 
+### Enhancing Accuracy with Gait Recognition
+
+As part of our commitment to continuous improvement, we are exploring the integration of gait recognition technology. Gait recognition analyzes the unique walking patterns of individuals, adding an additional layer of identification. This enhancement has the potential to further increase accuracy, especially in scenarios where facial recognition may be challenging.
+
+- **Improved Identification:** Gait recognition can contribute to more accurate identification, complementing existing facial recognition capabilities.
+
+- **Challenging Environments:** In situations where facial features may be partially obscured or challenging to capture, gait recognition provides an alternative method for identification.
+
+- **Ongoing Research:** We are actively researching and testing gait recognition algorithms to assess their suitability for integration into the Crime Prevention AI system.
+
+![gait-recognition-identify-mapping-unique-manner](https://github.com/cse21-077/Crime-Prevention-System---Advanced-Number-Plate-and-Face-Recognition/assets/102771883/00b5537e-a453-4522-a5aa-bb4da32ad0fa)
+![Overview-of-the-proposed-gait-recognition-method](https://github.com/cse21-077/Crime-Prevention-System---Advanced-Number-Plate-and-Face-Recognition/assets/102771883/4560022c-ad0f-423a-8e4f-f018ca89872d)
+
+
 ## Prerequisites
 
 - Python 3.x
